@@ -1,0 +1,52 @@
+{
+  "slug": "inguide",
+  "title": "InGuide",
+  "status": "open source",
+  "year": "2024",
+  "category": "Maps / Android + Web",
+  "role": "Android app + indoor map viewer",
+  "tagline": "Dual-version guide: native Android app and MVF map web viewer.",
+  "description": "InGuide ships as a Kotlin/Jetpack Compose Android app and a web map viewer. The app covers auth, dashboard, schedule, and AI chat UI, while the web build loads MVF zip bundles, filters floors, and visualizes debug node layers with Mapbox GL/MapLibre tooling.",
+  "highlights": [
+    "Android app screens for auth, home, schedule, map, and chat (Material3)",
+    "Web viewer loads MVF zip bundles with floor filtering + legend-driven debug layers",
+    "Indoor map tooling built around Mappedin MVF data and node visualization workflows"
+  ],
+  "stack": [
+    "Kotlin",
+    "Jetpack Compose",
+    "Android",
+    "JavaScript",
+    "Vite",
+    "Mapbox GL",
+    "Mappedin MVF",
+    "Turf.js"
+  ],
+  "typing": [
+    "platforms: android + web",
+    "maps: mvf zip + floor filtering",
+    "ui: compose + map viewer"
+  ],
+  "links": [
+    {
+      "label": "Android App Repo",
+      "href": "https://github.com/0xyon3/inguide"
+    },
+    {
+      "label": "Web Map Repo",
+      "href": "https://github.com/0xyon3/maplibra_map"
+    },
+    {
+      "label": "Live Web Demo",
+      "href": "https://mapsu.netlify.app/"
+    }
+  ],
+  "imageFolder": "inguide_images",
+  "images": [
+    "inguide_phone_home.jpg",
+    "inguide_phone_map.jpg",
+    "inguide_phone_schedule.jpg",
+    "inguide_web.png"
+  ],
+  "order": 2
+}

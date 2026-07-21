@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icon-16.png">
+    <link rel="icon" type="image/png" href="/yon-logo-black.png">
+    <link rel="apple-touch-icon" href="/yon-logo-black.png">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <script>
+      // Prevent flash: apply dark mode before paint
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f3f3f1;
+        --sheet-bg: #ffffff;
+        --text: #1b1b1b;
+        --text-muted: #555555;
+        --text-secondary: #333333;
+        --border: #e5e5e3;
+        --border-light: #d7d7d3;
+        --border-faint: #ecece8;
+        --shadow: rgba(0, 0, 0, 0.12);
+      }
+
+      .dark {
+        color-scheme: dark;
+        --bg: #09090b;
+        --sheet-bg: #111113;
+        --text: #fafafa;
+        --text-muted: #a1a1aa;
+        --text-secondary: #d4d4d8;
+        --border: #27272a;
+        --border-light: #3f3f46;
+        --border-faint: #1f1f23;
+        --shadow: rgba(0, 0, 0, 0.4);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Times New Roman", Times, serif;
+        font-size: 16px;
+      }
+
+      a {
+        color: var(--text);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      a:hover {
+        border-bottom-color: var(--text);
+      }
+
+      .page {
+        min-height: 100dvh;
+        display: flex;
+        justify-content: center;
+        padding: 32px 16px 64px;
+      }
+
+      .sheet {
+        width: min(900px, 100%);
+        background: var(--sheet-bg);
+        box-shadow: 0 16px 40px var(--shadow);
+        border: 1px solid var(--border);
+        padding: 48px 56px 56px;
+      }
+
+      .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .top-bar-btn {
+        border: 1px solid var(--text);
+        background: var(--sheet-bg);
+        color: var(--text);
+        padding: 8px 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .top-bar-btn:active {
+        transform: translateY(1px);
+      }
+
+      header {
+        margin-bottom: 28px;
+      }
+
+      .name {
+        font-size: 32px;
+        font-weight: 700;
+        margin: 0 0 4px;
+      }
+
+      .role {
+        font-size: 15px;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+      }
+
+      .contact {
+        margin-top: 16px;
+        display: grid;
+        gap: 4px 24px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        font-size: 14px;
+      }
+
+      .summary {
+        margin: 24px 0;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      .section {
+        margin-top: 24px;
+      }
+
+      .section-title {
+        font-size: 15px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        margin: 0 0 12px;
+      }
+
+      .entry {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 16px;
+      }
+
+      .entry:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .entry-time {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+      }
+
+      .entry-title {
+        font-weight: 700;
+        font-size: 16px;
+        margin: 0 0 4px;
+      }
+
+      .project-link {
+        display: inline-block;
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .project-link:hover {
+        border-bottom-color: var(--text);
+      }
+
+      .entry-org {
+        font-size: 14px;
+        margin: 0 0 6px;
+        color: var(--text-secondary);
+      }
+
+      .entry-desc {
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      .simple-list {
+        list-style: disc;
+        padding-left: 20px;
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.8;
+        columns: 2;
+        column-gap: 32px;
+      }
+
+      .cert-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px 28px;
+      }
+
+      .cert-title {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin: 0 0 8px;
+        color: var(--text-muted);
+      }
+
+      .cert-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .cert-list li {
+        margin-bottom: 6px;
+      }
+
+      /* Audio player */
+      .audio-player {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 16px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .audio-player select {
+        background: var(--sheet-bg);
+        color: var(--text);
+        border: 1px solid var(--border);
+        padding: 4px 8px;
+        font-size: 12px;
+        font-family: inherit;
+        cursor: pointer;
+      }
+
+      .audio-player button {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 4px 12px;
+        font-size: 12px;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .audio-player button:hover {
+        border-color: var(--text);
+      }
+
+      .track-name {
+        color: var(--text-muted);
+        font-size: 11px;
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      @media (max-width: 700px) {
+        .sheet {
+          padding: 32px 24px 40px;
+        }
+
+        .entry {
+          grid-template-columns: 1fr;
+        }
+
+        .entry-time {
+          margin-bottom: 4px;
+        }
+      }
+
+      @media print {
+        body {
+          background: #ffffff;
+          color: #1b1b1b;
+        }
+
+        .page {
+          padding: 0;
+        }
+
+        .sheet {
+          box-shadow: none;
+          border: none;
+          width: 100%;
+          padding: 0;
+          background: #ffffff;
+        }
+
+        .top-bar {
+          display: none;
+        }
+
+        .audio-player {
+          display: none;
+        }
+
+        a {
+          color: #1b1b1b;
+        }
+
+        .entry {
+          border-bottom-color: #e5e5e3;
+        }
+
+        .entry-time, .cert-title {
+          color: #555555;
+        }
+
+        .entry-org {
+          color: #333333;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="sheet">
+        <div class="top-bar">
+          <div class="audio-player">
+            <button type="button" id="audio-toggle">Play</button>
+            <select id="track-select"></select>
+            <span class="track-name" id="track-name"></span>
+          </div>
+          <button class="top-bar-btn" type="button" id="theme-toggle">Dark</button>
+          <button class="top-bar-btn" type="button" onclick="window.print()">Export PDF</button>
+        </div>
+
+        <header>
+          <h1 class="name">yon3</h1>
+          <p class="role">Full Stack Developer - Web & Apps</p>
+          <div class="contact">
+            <div>Email: <a href="mailto:yon3@sp.us.ci">yon3@sp.us.ci</a></div>
+            <div>GitHub: <a href="https://github.com/0xyon3">github.com/0xyon3</a></div>
+            <div>Experience: <span data-experience></span> years</div>
+          </div>
+        </header>
+
+        <p class="summary">
+          Full-stack web and application developer with <span data-experience></span> years
+          of hands-on experience, building products since <span data-experience-start-year></span>.
+          I ship end-to-end web, backend, and Android solutions with a focus on clean UX, reliable
+          APIs, and practical AI integrations.
+        </p>
+
+        <section class="section">
+          <h2 class="section-title">Experience</h2>
+
+          <div class="entry">
+            <div class="entry-time" data-exp-range></div>
+            <div>
+              <p class="entry-title">Full Stack Web and Application Developer</p>
+              <p class="entry-org">Freelance and personal projects</p>
+              <p class="entry-desc">
+                Build and ship full-stack products across web, backend APIs, and Android. Focus on
+                performance, real-world usability, and clean data flows from UI to database.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Selected Projects</h2>
+          <div class="entry">
+            <div class="entry-time">2024</div>
+            <div>
+              <p class="entry-title">
+                <a class="project-link" href="https://github.com/0xyon3/lanflix" target="_blank" rel="noopener noreferrer">LANflix</a>
+              </p>
+              <p class="entry-org">Android / LAN streaming</p>
+              <p class="entry-desc">
+                Local-only media server and client app with LAN discovery and Media3 playback.
+              </p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="entry-time">2024</div>
+            <div>
+              <p class="entry-title">
+                <a class="project-link" href="https://github.com/0xyon3/social-media/tree/feature/backend-express" target="_blank" rel="noopener noreferrer">Social Nation</a>
+              </p>
+              <p class="entry-org">Full-stack social platform</p>
+              <p class="entry-desc">
+                Vanilla JS frontend with Express API, MongoDB, authentication, and media uploads.
+              </p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="entry-time">2024</div>
+            <div>
+              <p class="entry-title">
+                <a class="project-link" href="https://github.com/0xyon3/inguide" target="_blank" rel="noopener noreferrer">inGuide</a>
+              </p>
+              <p class="entry-org">Maps and AI</p>
+              <p class="entry-desc">
+                Map-first city guide with AI summaries and fast geospatial rendering.
+              </p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="entry-time">2023</div>
+            <div>
+              <p class="entry-title">
+                <a class="project-link" href="https://github.com/0xyon3/cdraw" target="_blank" rel="noopener noreferrer">Cdraw</a>
+              </p>
+              <p class="entry-org">Linux drawing app</p>
+              <p class="entry-desc">
+                Desktop drawing tool with pressure-aware brushes, layer stacks, and AI cleanup.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Certifications</h2>
+          <div class="cert-grid">
+            <div>
+              <p class="cert-title">AI & Machine Learning</p>
+              <ul class="cert-list">
+                <li>IBM Modeling with Transformers (Coursera)</li>
+                <li>PyTorch & Ecosystem Tools (Coursera)</li>
+                <li>Classification & Regression (Coursera)</li>
+                <li>Probability for Data Science & AI (Coursera)</li>
+              </ul>
+            </div>
+            <div>
+              <p class="cert-title">Security & Networking</p>
+              <ul class="cert-list">
+                <li>OWASP Top 10 (Coursera)</li>
+                <li>CompTIA Network+ (Coursera)</li>
+                <li>Security Engineer (TryHackMe)</li>
+                <li>Security Operations Center (SOC)</li>
+              </ul>
+            </div>
+            <div>
+              <p class="cert-title">Systems & Programming</p>
+              <ul class="cert-list">
+                <li>CS50P (Harvard)</li>
+                <li>Software Architecture (Coursera)</li>
+                <li>CompTIA Linux+ (Coursera)</li>
+                <li>OpenGL Graphics Programming</li>
+                <li>Master Go</li>
+              </ul>
+            </div>
+            <div>
+              <p class="cert-title">Web & Full-Stack</p>
+              <ul class="cert-list">
+                <li>Meta Full-Stack Developer (Coursera)</li>
+                <li>Full Stack Spring Boot (Java)</li>
+              </ul>
+            </div>
+          </div>
+          <p class="entry-desc" style="margin-top: 12px;">
+            Full certificate archive: <a href="https://github.com/0xyon3/cert">github.com/0xyon3/cert</a>
+          </p>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Skills & Languages</h2>
+          <ul class="simple-list">
+            <li>Full-stack web (React, Node, Express)</li>
+            <li>Backend APIs (go-chi, MongoDB, PostgreSQL)</li>
+            <li>Android apps (Kotlin, Ktor)</li>
+            <li>AI and ML (PyTorch, CV, NLP)</li>
+            <li>Systems (C, C++, OpenGL, Linux)</li>
+            <li>UI and product polish</li>
+            <li>Arabic (Native), English (Professional)</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    <script>
+      // --- Dark Mode ---
+      const themeToggle = document.getElementById('theme-toggle');
+      const applyTheme = (dark) => {
+        document.documentElement.classList.toggle('dark', dark);
+        themeToggle.textContent = dark ? 'Light' : 'Dark';
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+      };
+      // Read from localStorage (syncs with main app)
+      const savedTheme = localStorage.getItem('theme');
+      applyTheme(savedTheme === 'dark');
+      themeToggle.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        applyTheme(!isDark);
+      });
+
+      // --- Audio Player ---
+      const tracks = [
+        { name: 'Christopher Larkin - Bilewater', file: '/music/Christopher%20Larkin%20-%20Bilewater.mp3' },
+        { name: 'Christopher Larkin - Moss Grotto', file: '/music/Christopher%20Larkin%20-%20Moss%20Grotto.mp3' },
+        { name: 'Christopher Larkin - Songclave', file: '/music/Christopher%20Larkin%20-%20Songclave.mp3' },
+        { name: 'Lies of P - Lisrim', file: '/music/Lies%20of%20P%20-%20Lisrim.mp3' },
+        { name: 'Luke Pickman - Choral Chambers', file: '/music/Luke%20Pickman%20-%20Choral%20Chambers%20(from%20Hollow%20Knight%20Silksong).mp3' },
+      ];
+
+      const audioEl = new Audio();
+      audioEl.volume = 0.12;
+      audioEl.loop = true;
+      let isPlaying = false;
+
+      const trackSelect = document.getElementById('track-select');
+      const audioToggle = document.getElementById('audio-toggle');
+      const trackNameEl = document.getElementById('track-name');
+
+      // Populate track list
+      tracks.forEach((t, i) => {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = t.name;
+        trackSelect.appendChild(opt);
+      });
+
+      // Restore saved track from main app
+      const savedTrack = localStorage.getItem('bg-music-track');
+      if (savedTrack) {
+        const idx = tracks.findIndex(t => t.file.includes(savedTrack.replace('.mp3', '')));
+        if (idx >= 0) trackSelect.value = idx;
+      }
+
+      const loadAndPlay = (index) => {
+        const src = tracks[index].file;
+        trackNameEl.textContent = tracks[index].name;
+        if (audioEl.src.endsWith(src) || audioEl.src === new URL(src, location.href).href) {
+          audioEl.play().catch(() => {});
+          return;
+        }
+        audioEl.src = src;
+        audioEl.addEventListener('canplay', function handler() {
+          audioEl.removeEventListener('canplay', handler);
+          audioEl.play().catch(() => {});
+        });
+        audioEl.load();
+      };
+
+      trackSelect.addEventListener('change', () => {
+        trackNameEl.textContent = tracks[trackSelect.value].name;
+        if (isPlaying) {
+          loadAndPlay(trackSelect.value);
+        } else {
+          audioEl.src = tracks[trackSelect.value].file;
+        }
+      });
+
+      audioToggle.addEventListener('click', () => {
+        if (isPlaying) {
+          audioEl.pause();
+          audioToggle.textContent = 'Play';
+          isPlaying = false;
+        } else {
+          loadAndPlay(trackSelect.value);
+          audioToggle.textContent = 'Pause';
+          isPlaying = true;
+        }
+      });
+
+      // Set initial track name
+      trackNameEl.textContent = tracks[trackSelect.value].name;
+
+      // --- Experience calculation ---
+      const profileMeta = {
+        experienceStart: '2022-01-01',
+      };
+
+      const calculateYears = (startDate, endDate = new Date()) => {
+        let years = endDate.getFullYear() - startDate.getFullYear();
+        const hasReachedAnniversary =
+          endDate.getMonth() > startDate.getMonth() ||
+          (endDate.getMonth() === startDate.getMonth() && endDate.getDate() >= startDate.getDate());
+        if (!hasReachedAnniversary) {
+          years -= 1;
+        }
+        return Math.max(0, years);
+      };
+
+      const setText = (selector, value) => {
+        document.querySelectorAll(selector).forEach((element) => {
+          element.textContent = value;
+        });
+      };
+
+      const experienceStart = new Date(profileMeta.experienceStart);
+      const experienceYears = calculateYears(experienceStart);
+      const experienceRange = `${experienceStart.getFullYear()}-Present`;
+      const experienceStartYear = experienceStart.getFullYear();
+
+      setText('[data-experience]', `${experienceYears}`);
+      setText('[data-experience-start-year]', `${experienceStartYear}`);
+      setText('[data-exp-range]', experienceRange);
+    </script>
+  </body>
+</html>

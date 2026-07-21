@@ -1,0 +1,30 @@
+{
+  "slug": "lanflix",
+  "title": "LANflix",
+  "status": "open source",
+  "year": "2024",
+  "category": "Android / LAN Streaming",
+  "role": "Server + client media app",
+  "tagline": "Local-only streaming with a built-in server and LAN discovery.",
+  "description": "Android app that runs in two modes: Server hosts a local media folder over LAN with live indexing and cached metadata; Client discovers servers, opens the in-app library UI, and streams via Media3 with resume history. Everything stays on your local network with optional PIN protection.",
+  "highlights": [
+    "Server mode with live indexing, metadata cache, and optional PIN",
+    "Client discovery via LAN health checks and strict host enforcement",
+    "Media3 playback with resume history and retention settings"
+  ],
+  "stack": ["Kotlin", "Android", "Ktor", "Media3", "Room", "Koin", "DataStore", "NSD"],
+  "typing": [
+    "mode: server + client",
+    "discovery: nsd + health checks",
+    "player: media3 + resume"
+  ],
+  "links": [
+    {
+      "label": "View Source on GitHub",
+      "href": "https://github.com/0xyon3/lanflix"
+    }
+  ],
+  "imageFolder": "lanflix_images",
+  "images": ["lanflix_server_setup.png", "lanflix_client_browse.png", "lanflix_media_player.png"],
+  "order": 4
+}

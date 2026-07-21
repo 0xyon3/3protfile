@@ -1,0 +1,34 @@
+{
+  "slug": "social-nation",
+  "title": "Social Nation",
+  "status": "open source",
+  "year": "2024",
+  "category": "Full-stack / Social",
+  "role": "Vanilla JS social network",
+  "tagline": "Full-stack social platform built with vanilla JavaScript and an Express API.",
+  "description": "Feeds, profiles, and connections with a REST API, MongoDB persistence, and media uploads. The UI is built without a frontend framework, relying on modular JS/TS and Bootstrap styling.",
+  "highlights": [
+    "Auth flows with email verification and password recovery",
+    "Posts, comments, replies, and LinkedIn-style reactions",
+    "Profiles, connections, and friend suggestions"
+  ],
+  "stack": ["JavaScript", "HTML", "CSS", "Node.js", "Express", "MongoDB", "Mongoose", "JWT", "Cloudinary"],
+  "typing": [
+    "frontend: vanilla JS (no framework)",
+    "backend: express + mongo",
+    "features: auth + posts + connections"
+  ],
+  "links": [
+    {
+      "label": "Live Site",
+      "href": "https://social-nation.netlify.app/"
+    },
+    {
+      "label": "View Source on GitHub",
+      "href": "https://github.com/0xyon3/social-media/tree/feature/backend-express"
+    }
+  ],
+  "imageFolder": "social_media_images",
+  "images": ["website_look.png"],
+  "order": 7
+}

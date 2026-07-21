@@ -1,0 +1,33 @@
+{
+  "slug": "face_expression_recognition",
+  "title": "Face Expression Recognition",
+  "status": "open source",
+  "year": "2022",
+  "category": "CV / ML",
+  "role": "HOG + SVM pipeline",
+  "tagline": "HOG feature pipeline trained with an RBF SVM on CK+.",
+  "description": "Classical CV training flow that loads CK+ frames, normalizes them to 64x64 grayscale, extracts HOG descriptors, and trains an RBF SVM. Includes evaluation output plus a saved svm_model.joblib artifact and a small inference script for single-image predictions.",
+  "highlights": [
+    "HOG descriptors with 7 orientations, 8x8 cells, 4x4 blocks",
+    "70/30 train-test split with metrics reporting",
+    "Inference script loads the saved model for one-off predictions"
+  ],
+  "stack": ["Python", "Scikit-learn", "OpenCV", "scikit-image", "NumPy"],
+  "typing": [
+    "dataset: CK+",
+    "input: 64x64 grayscale",
+    "svm: rbf (C=10, gamma=scale)"
+  ],
+  "links": [
+    {
+      "label": "View Source on GitHub",
+      "href": "https://github.com/0xyon3/face_expression_recognition"
+    }
+  ],
+  "imageFolder": "face_expression_recognition_images",
+  "images": [
+    "main_expresssion_image.png",
+    "train_images.png"
+  ],
+  "order": 3
+}

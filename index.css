@@ -1,0 +1,20 @@
+@import "./styles/variables.css";
+@import "./styles/typography.css";
+@import "./styles/motion.css";
+@import "./styles/utilities.css";
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background: #09090b;
+  color: #fafafa;
+}
+
+/* Smooth section dividers */
+.section-divider {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+}
