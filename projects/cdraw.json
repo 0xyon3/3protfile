@@ -25,6 +25,6 @@
     }
   ],
   "imageFolder": "cdraw_images",
-  "images": ["application _nterface.png", "light_mode_interface.png"],
+  "images": ["application_nterface.webp", "light_mode_interface.webp"],
   "order": 1
 }

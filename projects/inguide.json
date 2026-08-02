@@ -43,10 +43,10 @@
   ],
   "imageFolder": "inguide_images",
   "images": [
-    "inguide_phone_home.jpg",
-    "inguide_phone_map.jpg",
-    "inguide_phone_schedule.jpg",
-    "inguide_web.png"
+    "inguide_phone_home.webp",
+    "inguide_phone_map.webp",
+    "inguide_phone_schedule.webp",
+    "inguide_web.webp"
   ],
   "order": 2
 }

@@ -25,6 +25,6 @@
     }
   ],
   "imageFolder": "lanflix_images",
-  "images": ["lanflix_server_setup.png", "lanflix_client_browse.png", "lanflix_media_player.png"],
+  "images": ["lanflix_server_setup.webp", "lanflix_client_browse.webp", "lanflix_media_player.webp"],
   "order": 4
 }

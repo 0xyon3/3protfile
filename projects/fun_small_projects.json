@@ -44,12 +44,12 @@
   ],
   "imageFolder": "fun_small_projects_images",
   "images": [
-    "hexagon_game.png",
-    "reylib_ping_pong.png",
-    "pacman.png",
-    "media_player.png",
-    "flask_media_player.png",
-    "space_invaders.png"
+    "hexagon_game.webp",
+    "reylib_ping_pong.webp",
+    "pacman.webp",
+    "media_player.webp",
+    "flask_media_player.webp",
+    "space_invaders.webp"
   ],
   "order": 10
 }

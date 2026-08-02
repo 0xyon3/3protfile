@@ -78,14 +78,24 @@ export const useActiveSectionRail = (sectionRefs: SectionRailRefs) => {
       }
     };
 
+    let scrollFrameId = 0;
+    const throttledUpdate = () => {
+      if (scrollFrameId) return;
+      scrollFrameId = window.requestAnimationFrame(() => {
+        scrollFrameId = 0;
+        updateActiveSection();
+      });
+    };
+
     measureUntilReady();
-    window.addEventListener('scroll', updateActiveSection, { passive: true });
-    window.addEventListener('resize', updateActiveSection);
+    window.addEventListener('scroll', throttledUpdate, { passive: true });
+    window.addEventListener('resize', throttledUpdate);
 
     return () => {
       window.cancelAnimationFrame(frameId);
-      window.removeEventListener('scroll', updateActiveSection);
-      window.removeEventListener('resize', updateActiveSection);
+      if (scrollFrameId) window.cancelAnimationFrame(scrollFrameId);
+      window.removeEventListener('scroll', throttledUpdate);
+      window.removeEventListener('resize', throttledUpdate);
     };
   }, [orderedSectionIds, sectionRefs]);
 

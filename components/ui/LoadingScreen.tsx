@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m as motion, useReducedMotion } from 'framer-motion';
 
 export const LoadingScreen = () => {
   const prefersReducedMotion = useReducedMotion();
@@ -19,11 +19,11 @@ export const LoadingScreen = () => {
       transition={{ duration: 0.4, ease: 'easeOut' }}
       style={{ backgroundColor: '#000000' }}
     >
-      <div className="relative z-10 flex flex-col items-center gap-4 border border-white/[0.06] bg-[#0f0f0f] px-10 py-8">
+      <div className="relative z-10 flex flex-col items-center gap-4 border border-white/[0.06] bg-[#0b0b0d] px-10 py-8">
         <div className="font-display text-lg font-bold tracking-wider text-white">
-          YS
+          yon3<span className="text-[#ffffff]">_</span>
         </div>
-        <div className="text-[10px] uppercase tracking-[0.3em] text-white/40">
+        <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
           Loading
         </div>
         <div className="mt-3 h-px w-32 overflow-hidden bg-white/10">

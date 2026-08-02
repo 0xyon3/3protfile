@@ -43,7 +43,7 @@ export const SurfaceCodeDiagram = memo(() => (
       return (
         <article
           key={project.slug}
-          className="group relative overflow-hidden border border-white/[0.06] bg-white/[0.02] transition-all hover:border-white/10 hover:bg-white/[0.04]"
+          className="group relative flex flex-col overflow-hidden border border-white/[0.07] bg-white/[0.015] transition-all duration-300 hover:-translate-y-1 hover:border-[#ffffff]/25 hover:bg-white/[0.03] hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.8)]"
         >
           {/* Cover image area */}
           <div className="relative">
@@ -98,17 +98,17 @@ export const SurfaceCodeDiagram = memo(() => (
             )}
 
             {/* Overlay badges */}
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#09090b]/80 to-transparent p-4">
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#060607]/90 to-transparent p-4">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className={`px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider ${statusClass}`}>
+                  <span className={`px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider ${statusClass}`}>
                     {project.status}
                   </span>
-                  <span className="border border-white/[0.08] bg-white/[0.04] px-2.5 py-1 text-[10px] uppercase tracking-wider text-white/40">
+                  <span className="border border-white/[0.08] bg-black/40 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-white/40">
                     {project.year}
                   </span>
                 </div>
-                <span className="text-[10px] font-medium uppercase tracking-wider text-[#c4a7e7]/60">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[#ffffff]/70">
                   {project.category}
                 </span>
               </div>
@@ -116,14 +116,17 @@ export const SurfaceCodeDiagram = memo(() => (
           </div>
 
           {/* Content */}
-          <div className="p-6">
+          <div className="flex flex-1 flex-col p-6">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h3 className="font-display text-xl font-bold text-white sm:text-2xl">
+                <h3 className="font-display text-xl font-bold tracking-tight text-white transition-colors group-hover:text-[#ffffff] sm:text-2xl">
                   {project.title}
                 </h3>
-                <p className="mt-1 text-xs uppercase tracking-wider text-white/30">{project.role}</p>
+                <p className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">{project.role}</p>
               </div>
+              <span className="font-mono text-xs text-white/20">
+                {String(index + 1).padStart(2, '0')}
+              </span>
             </div>
 
             <p
@@ -133,9 +136,9 @@ export const SurfaceCodeDiagram = memo(() => (
             </p>
 
             {project.typing?.length ? (
-              <div className="mt-4 border border-white/[0.06] bg-white/[0.02] px-4 py-3">
-                <p className="mb-2 text-[10px] font-medium uppercase tracking-wider text-white/25">
-                  Telemetry
+              <div className="mt-4 border border-white/[0.07] bg-black/30 px-4 py-3">
+                <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-[#ffffff]/60">
+                  $ telemetry
                 </p>
                 <div className="space-y-1 font-mono text-sm text-white/50">
                   {project.typing.map((line, lineIndex) => (
@@ -161,8 +164,8 @@ export const SurfaceCodeDiagram = memo(() => (
               className={`mt-4 ${isCompactCopy ? 'space-y-1.5 text-sm' : 'space-y-2 text-base'} text-white/45`}
             >
               {project.highlights.map((highlight) => (
-                <li key={`${project.slug}-${highlight}`} className="flex gap-2">
-                  <span className="mt-1.5 h-1 w-1 flex-shrink-0 bg-[#c4a7e7]/40" />
+                <li key={`${project.slug}-${highlight}`} className="flex gap-2.5">
+                  <span className="mt-2 h-px w-3 flex-shrink-0 bg-[#ffffff]/50" />
                   <span>{highlight}</span>
                 </li>
               ))}
@@ -173,7 +176,7 @@ export const SurfaceCodeDiagram = memo(() => (
               {project.stack.map((item) => (
                 <span
                   key={`${project.slug}-${item}`}
-                  className={`border border-white/[0.06] bg-white/[0.02] px-2.5 py-1 ${isCompactCopy ? 'text-[10px]' : 'text-[11px]'} text-white/40`}
+                  className={`border border-white/[0.07] bg-white/[0.02] px-2.5 py-1 font-mono ${isCompactCopy ? 'text-[10px]' : 'text-[11px]'} text-white/40 transition-colors hover:border-white/20 hover:text-white/70`}
                 >
                   {item}
                 </span>
@@ -200,19 +203,19 @@ export const SurfaceCodeDiagram = memo(() => (
             ) : null}
 
             {/* Links */}
-            <div className={isTwoColumnLinks ? 'mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2' : 'mt-5 flex flex-wrap gap-2'}>
+            <div className={isTwoColumnLinks ? 'mt-auto grid grid-cols-1 gap-2 pt-5 sm:grid-cols-2' : 'mt-auto flex flex-wrap gap-2 pt-5'}>
               {project.links.map((link) => (
                 <a
                   key={`${project.slug}-${link.href}`}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group/link inline-flex items-center gap-1.5 border border-white/[0.08] bg-white/[0.03] px-3.5 py-2 text-xs text-white/50 transition-all hover:border-white/15 hover:text-white/80 ${
+                  className={`group/link inline-flex items-center gap-1.5 border border-white/[0.08] bg-white/[0.03] px-3.5 py-2 font-mono text-xs text-white/50 transition-all hover:border-[#ffffff]/40 hover:text-[#ffffff] ${
                     isTwoColumnLinks ? 'w-full justify-center' : ''
                   }`}
                 >
                   {link.label}
-                  <ArrowUpRight size={12} className="opacity-0 transition-opacity group-hover/link:opacity-100" />
+                  <ArrowUpRight size={12} className="transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
                 </a>
               ))}
             </div>

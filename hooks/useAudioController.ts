@@ -72,13 +72,11 @@ export const useAudioController = () => {
     audio.addEventListener('play', handlePlay);
     audio.addEventListener('pause', handlePause);
 
-    attemptAudioPlay();
-
     return () => {
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
     };
-  }, [attemptAudioPlay]);
+  }, []);
 
   useEffect(() => {
     if (!activeTrack?.id) return;
@@ -88,16 +86,16 @@ export const useAudioController = () => {
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !activeTrackUrl) return;
+    // Only fetch/decode once the user has opted in to sound.
     const wasPlaying = !audio.paused;
+    if (!wasPlaying) return;
     audio.load();
-    if (wasPlaying) {
-      const playPromise = audio.play();
-      if (playPromise) {
-        playPromise.catch(() => {
-          setIsAudioPlaying(false);
-          setNeedsAudioUnlock(true);
-        });
-      }
+    const playPromise = audio.play();
+    if (playPromise) {
+      playPromise.catch(() => {
+        setIsAudioPlaying(false);
+        setNeedsAudioUnlock(true);
+      });
     }
   }, [activeTrackUrl]);
 
@@ -120,24 +118,10 @@ export const useAudioController = () => {
     return () => sfx.removeEventListener('ended', handleEnded);
   }, []);
 
-  useEffect(() => {
-    const handleFirstInteraction = () => {
-      if (audioAutoplayRef.current) return;
-      attemptAudioPlay();
-    };
-
-    window.addEventListener('pointerdown', handleFirstInteraction);
-    return () => window.removeEventListener('pointerdown', handleFirstInteraction);
-  }, [attemptAudioPlay]);
-
-  useEffect(() => {
-    const handlePageShow = () => {
-      attemptAudioPlay();
-    };
-
-    window.addEventListener('pageshow', handlePageShow);
-    return () => window.removeEventListener('pageshow', handlePageShow);
-  }, [attemptAudioPlay]);
+  // Music starts ONLY on explicit user action (toggle button / unlock button /
+  // track selection). No autoplay on mount, pageshow, or arbitrary clicks —
+  // this keeps preload="none" effective and avoids multi-MB downloads for
+  // visitors who never enable sound.
 
   const toggleAudio = useCallback(() => {
     const audio = audioRef.current;
@@ -148,6 +132,12 @@ export const useAudioController = () => {
       resumeAfterSfxRef.current = false;
       audio.pause();
     }
+  }, [attemptAudioPlay]);
+
+  const selectTrack = useCallback((trackId: string) => {
+    setSelectedTrackId(trackId);
+    // Selecting a track is an explicit opt-in: start playback (this loads on demand).
+    attemptAudioPlay();
   }, [attemptAudioPlay]);
 
   const playThemeSwitchSfx = useCallback(() => {
@@ -173,7 +163,7 @@ export const useAudioController = () => {
     toggleAudio,
     tracks: musicTracks,
     activeTrackId: activeTrack?.id || '',
-    setSelectedTrackId,
+    setSelectedTrackId: selectTrack,
     activeTrackUrl,
     sfxUrl: themeSwitchTrack,
     playThemeSwitchSfx,

@@ -4,8 +4,9 @@
  */
 
 import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { m as motion } from 'framer-motion';
+import { ArrowDownRight, ArrowRight } from 'lucide-react';
+import { InteractiveTerminal } from '../ui/InteractiveTerminal';
 
 type HeroSectionProps = {
   onScrollTo: (id: string) => (event: React.MouseEvent) => void;
@@ -13,28 +14,25 @@ type HeroSectionProps = {
   sectionRef?: React.Ref<HTMLElement>;
 };
 
+const easeOut = [0.22, 1, 0.36, 1] as const;
+
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 28 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.72, delay, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.8, delay, ease: easeOut },
   }),
 };
 
-const studioNotes = [
-  {
-    label: 'Current desk',
-    text: 'Model serving, product-grade ML, and backend systems.',
-  },
-  {
-    label: 'Working style',
-    text: 'Small teams, clear interfaces, fast demos, careful shipping.',
-  },
-  {
-    label: 'Tools I reach for',
-    text: 'TypeScript, Python, React, PyTorch, Docker, Linux.',
-  },
+const MARQUEE_ITEMS = [
+  'AI SYSTEMS',
+  'MODEL SERVING',
+  'BACKENDS',
+  'GRAPHICS',
+  'TYPESCRIPT',
+  'PYTHON',
+  'C',
 ];
 
 export const HeroSection = ({
@@ -45,156 +43,139 @@ export const HeroSection = ({
   <header
     ref={sectionRef}
     id="hero"
-    className="relative isolate flex min-h-[100dvh] items-center overflow-hidden px-6 py-28 sm:py-32"
+    className="relative flex min-h-[100dvh] flex-col overflow-hidden"
   >
-    <div className="pointer-events-none absolute inset-0 -z-10 bg-[#080705]" />
-    <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.16] [background-image:linear-gradient(rgba(248,244,234,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(248,244,234,0.1)_1px,transparent_1px)] [background-size:72px_72px]" />
-    <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_18%,rgba(217,119,6,0.18),transparent_34%),radial-gradient(circle_at_82%_72%,rgba(16,185,129,0.13),transparent_34%)]" />
-    <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.08] [background-image:linear-gradient(115deg,transparent_0%,rgba(255,255,255,0.18)_45%,transparent_48%)]" />
+    {/* hairline grid */}
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 opacity-[0.5] [background-image:linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:88px_88px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]"
+    />
+    {/* soft glows */}
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute -left-40 top-1/3 h-[480px] w-[480px] rounded-full bg-white/[0.04] blur-[140px]"
+    />
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute right-0 top-1/4 h-[420px] w-[420px] rounded-full bg-white/[0.03] blur-[140px]"
+    />
 
-    <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.75fr)]">
-      <div className="relative z-10">
-        <motion.p
+    <div className="container relative z-10 mx-auto grid w-full max-w-7xl flex-1 items-center gap-14 px-6 pt-28 pb-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(440px,0.9fr)] lg:gap-10">
+      {/* Left — headline */}
+      <div>
+        <motion.div
           variants={fadeUp}
           initial="hidden"
           animate="visible"
           custom={0}
-          className="mb-6 inline-flex items-center gap-3 rounded-full border border-amber-200/15 bg-amber-100/[0.04] px-4 py-2 text-xs font-medium uppercase tracking-[0.28em] text-amber-100/70 backdrop-blur-sm"
+          className="mb-9 flex flex-wrap items-center gap-x-6 gap-y-3 font-mono text-xs text-white/40"
         >
-          <span className="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_18px_rgba(110,231,183,0.75)]" />
-          Available for thoughtful work
-        </motion.p>
+          <span className="inline-flex items-center gap-2.5 border border-white/[0.08] bg-white/[0.02] px-3 py-1.5">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#ffffff] opacity-60" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#ffffff]" />
+            </span>
+            <span className="tracking-wider text-white/70">OPEN TO WORK</span>
+          </span>
+          <span className="hidden tracking-wider sm:inline">~/portfolio — v3.0</span>
+        </motion.div>
 
         <motion.h1
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          custom={0.08}
-          className="max-w-4xl font-display text-[clamp(3.4rem,8vw,7.8rem)] font-black leading-[0.86] tracking-[-0.08em] text-[#f8f4ea]"
+          custom={0.1}
+          className="font-display text-[clamp(3rem,8.5vw,7.25rem)] font-bold leading-[0.92] tracking-[-0.04em]"
         >
-          I build software that makes AI useful.
+          <span className="block text-white">YONE</span>
+          <span className="text-outline block">BUILDS</span>
+          <span className="block text-white">
+            SYSTEMS
+            <span className="text-[#ffffff]">.</span>
+          </span>
         </motion.h1>
 
-        <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0.16}
-          className="mt-8 max-w-2xl text-lg leading-8 text-stone-300/75 sm:text-xl"
-        >
-          Engineer turning messy ideas into shipped tools, data
-          pipelines, and model-serving systems that people can actually depend
-          on.
-        </motion.p>
+        <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.22}>
+          <p className="mt-9 max-w-xl text-lg leading-relaxed text-white/55">
+            Software engineer working across AI tooling, model-serving stacks,
+            and performance-critical backends — turning messy ideas into
+            software people can depend on.
+          </p>
 
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0.24}
-          className="mt-10 flex flex-wrap items-center gap-4"
-        >
-          <a
-            href="#projects"
-            onClick={onScrollTo('projects')}
-            className="group inline-flex items-center gap-3 rounded-full bg-[#f8f4ea] px-6 py-3 text-sm font-semibold text-[#11100d] shadow-[0_18px_60px_rgba(248,244,234,0.16)] transition-all hover:-translate-y-0.5 hover:bg-white"
-          >
-            See the work
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-          </a>
-          <a
-            href="#contact"
-            onClick={onScrollTo('contact')}
-            className="inline-flex items-center gap-3 rounded-full border border-stone-200/15 bg-stone-100/[0.04] px-6 py-3 text-sm font-medium text-stone-200/80 transition-all hover:border-stone-100/30 hover:text-white"
-          >
-            Start a conversation
-          </a>
-        </motion.div>
-
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0.34}
-          className="mt-12 flex max-w-2xl flex-wrap gap-3 text-xs uppercase tracking-[0.22em] text-stone-500"
-        >
-          <span className="rounded-full border border-stone-200/10 px-3 py-2">AI tools</span>
-          <span className="rounded-full border border-stone-200/10 px-3 py-2">Data systems</span>
-          <span className="rounded-full border border-stone-200/10 px-3 py-2">Reliable backends</span>
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <a
+              href="#projects"
+              onClick={onScrollTo('projects')}
+              className="group inline-flex items-center gap-3 bg-[#ffffff] px-6 py-3.5 font-mono text-xs font-medium uppercase tracking-[0.18em] text-[#060607] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(204,246,85,0.25)]"
+            >
+              View work
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+            </a>
+            <a
+              href="#contact"
+              onClick={onScrollTo('contact')}
+              className="group inline-flex items-center gap-3 border border-white/12 px-6 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-white/60 transition-all hover:border-[#ffffff]/50 hover:text-[#ffffff]"
+            >
+              Get in touch
+              <ArrowDownRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
+            </a>
+          </div>
         </motion.div>
       </div>
 
+      {/* Right — terminal */}
       <motion.aside
         variants={fadeUp}
         initial="hidden"
         animate="visible"
-        custom={0.28}
-        className="relative hidden lg:block"
-        aria-label="Studio notes"
+        custom={0.32}
+        aria-label="Terminal"
       >
         <motion.div
-          animate={reducedMotion ? {} : { y: [0, -8, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          className="relative rounded-[2rem] border border-stone-200/12 bg-[#15120d]/72 p-5 shadow-[0_34px_120px_rgba(0,0,0,0.42)] backdrop-blur-xl"
+          animate={reducedMotion ? {} : { y: [0, -6, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <div className="absolute -left-8 top-10 h-28 w-3 rounded-full bg-amber-300/70 shadow-[0_0_30px_rgba(252,211,77,0.45)]" />
-          <div className="absolute -right-5 bottom-16 h-20 w-20 rounded-full border border-emerald-200/20" />
-          <div className="mb-5 flex items-center justify-between border-b border-stone-200/10 pb-4">
-            <p className="font-display text-xl font-bold text-[#f8f4ea]">desk notes</p>
-            <p className="text-[10px] uppercase tracking-[0.32em] text-stone-500">Y/S 04</p>
-          </div>
-
-          <div className="space-y-4">
-            {studioNotes.map((note, index) => (
-              <motion.div
-                key={note.label}
-                whileHover={{ rotate: index === 1 ? -1.2 : 1.2, y: -4 }}
-                className={`rounded-2xl border p-5 ${
-                  index === 0
-                    ? 'border-amber-200/15 bg-amber-100/[0.06]'
-                    : 'border-stone-200/10 bg-stone-50/[0.035]'
-                }`}
-              >
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-amber-100/55">
-                  {note.label}
-                </p>
-                <p className="mt-3 text-sm leading-6 text-stone-200/78">{note.text}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-5 grid grid-cols-[1fr_auto] items-end gap-5 rounded-2xl border border-emerald-200/15 bg-emerald-300/[0.045] p-5">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-emerald-100/55">
-                Signal
-              </p>
-              <p className="mt-3 text-sm leading-6 text-stone-200/78">
-                Designing systems with sharp edges hidden from users.
-              </p>
-            </div>
-            <div className="flex h-16 w-16 items-center justify-center rounded-full border border-emerald-100/20 text-xs font-bold text-emerald-100/80">
-              ship
-            </div>
-          </div>
+          <InteractiveTerminal onScrollTo={onScrollTo} reducedMotion={reducedMotion} />
         </motion.div>
-      </motion.aside>
 
-      <motion.a
-        href="#about"
-        onClick={onScrollTo('about')}
-        variants={fadeUp}
-        initial="hidden"
-        animate="visible"
-        custom={0.44}
-        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-stone-500 transition-colors hover:text-stone-300 md:flex"
-      >
-        <span className="text-[10px] font-medium uppercase tracking-[0.32em]">Scroll</span>
-        <motion.span
-          animate={reducedMotion ? {} : { y: [0, 6, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          className="h-8 w-px bg-gradient-to-b from-stone-400/60 to-transparent"
-        />
-      </motion.a>
+        {/* under-terminal meta */}
+        <div className="mt-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.25em] text-white/25">
+          <span>est. 2021</span>
+          <span>session: live</span>
+        </div>
+      </motion.aside>
     </div>
+
+    {/* marquee footer of hero */}
+    <motion.div
+      variants={fadeUp}
+      initial="hidden"
+      animate="visible"
+      custom={0.42}
+      className="relative z-10 border-t border-white/[0.06]"
+    >
+      <div className="flex overflow-hidden py-4 [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]">
+        <div
+          className="flex shrink-0 items-center gap-8 pr-8"
+          style={
+            reducedMotion
+              ? undefined
+              : { animation: 'heroMarquee 28s linear infinite' }
+          }
+        >
+          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
+            <span
+              key={`${item}-${i}`}
+              className="flex items-center gap-8 font-mono text-xs uppercase tracking-[0.3em] text-white/30"
+            >
+              {item}
+              <span className="text-[#ffffff]/60">✦</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+
+    <style>{`@keyframes heroMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
   </header>
 );

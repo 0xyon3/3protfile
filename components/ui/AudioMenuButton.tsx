@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect, useId, useRef, useState } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { m as motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Music, Volume2, VolumeX } from 'lucide-react';
 import type { MusicTrack } from '../../data/audio';
 
@@ -161,9 +161,9 @@ export const AudioMenuButton = ({
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 6, scale: 0.98 }}
             transition={{ duration: prefersReducedMotion ? 0.1 : 0.18, ease: 'easeOut' }}
           >
-            <div className="flex items-center justify-between border-b border-[#907aa9]/24 px-4 py-3">
-              <span className="text-[10px] uppercase tracking-[0.28em] text-[#c4a7e7]/88">Background music</span>
-              <span className="text-[10px] text-[#e0def4]/46">{tracks.length} tracks</span>
+            <div className="flex items-center justify-between border-b border-white/[0.08] px-4 py-3">
+              <span className="text-[10px] uppercase tracking-[0.28em] text-white/70">Background music</span>
+              <span className="text-[10px] text-white/35">{tracks.length} tracks</span>
             </div>
             <div className="max-h-64 overflow-auto py-1">
               {tracks.map((track) => {
@@ -176,12 +176,12 @@ export const AudioMenuButton = ({
                     aria-selected={isActive}
                     onClick={() => handleSelectTrack(track.id)}
                     className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm transition-colors ${isActive
-                      ? 'bg-[#c4a7e7]/14 text-[#f6f2ff]'
-                      : 'text-[#f6f2ff]/82 hover:bg-[#907aa9]/12'}`}
+                      ? 'bg-white/[0.08] text-white'
+                      : 'text-white/60 hover:bg-white/[0.05] hover:text-white/90'}`}
                   >
                     <span className="truncate">{track.name}</span>
                     {isActive && (
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-[#f6c177]">Default</span>
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-white/50">Default</span>
                     )}
                   </button>
                 );

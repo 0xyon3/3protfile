@@ -26,8 +26,8 @@
   ],
   "imageFolder": "face_expression_recognition_images",
   "images": [
-    "main_expresssion_image.png",
-    "train_images.png"
+    "main_expresssion_image.webp",
+    "train_images.webp"
   ],
   "order": 3
 }

@@ -29,6 +29,6 @@
     }
   ],
   "imageFolder": "0xyon3_blog_notes_images",
-  "images": ["main_page.png", "note_page.png"],
+  "images": ["main_page.webp", "note_page.webp"],
   "order": 9
 }

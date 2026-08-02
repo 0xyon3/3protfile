@@ -4,7 +4,7 @@
  */
 
 import React, { useCallback, useMemo, useRef, useState, Suspense } from 'react';
-import { AnimatePresence, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, LazyMotion, domAnimation, useReducedMotion } from 'framer-motion';
 import { LoadingScreen } from './components/ui/LoadingScreen';
 import { Navigation } from './components/layout/Navigation';
 import { MobileMenu } from './components/layout/MobileMenu';
@@ -16,7 +16,6 @@ const AboutSection = React.lazy(() => import('./components/sections/AboutSection
 const ProjectsSection = React.lazy(() => import('./components/sections/ProjectsSection').then(m => ({ default: m.ProjectsSection })));
 const ContactSection = React.lazy(() => import('./components/sections/ContactSection').then(m => ({ default: m.ContactSection })));
 import { useAudioController } from './hooks/useAudioController';
-import { useDeviceProfile } from './hooks/useDeviceProfile';
 import { useLoadingSequence } from './hooks/useLoadingSequence';
 import { useScrolledState } from './hooks/useScrolledState';
 import { useThemeTransition } from './hooks/useThemeTransition';
@@ -59,17 +58,18 @@ const App: React.FC = () => {
   }, []);
 
   return (
+    <LazyMotion features={domAnimation} strict>
     <div
       data-testid="app-shell"
       data-theme={theme}
-      className="min-h-[100dvh] overflow-x-hidden transition-colors duration-500 selection:bg-[#c4a7e7]/30 selection:text-white bg-[#09090b] text-[#fafafa]"
+      className="min-h-[100dvh] overflow-x-hidden bg-[#060607] text-[#f4f4f5] transition-colors duration-500"
     >
       <AnimatePresence>
         {isLoading && <LoadingScreen />}
       </AnimatePresence>
 
-      <audio ref={audio.audioRef} src={audio.activeTrackUrl || undefined} preload="auto" playsInline />
-      <audio ref={audio.sfxRef} src={audio.sfxUrl || undefined} preload="auto" playsInline />
+      <audio ref={audio.audioRef} src={audio.activeTrackUrl || undefined} preload="none" playsInline />
+      <audio ref={audio.sfxRef} src={audio.sfxUrl || undefined} preload="none" playsInline />
 
       {audio.needsAudioUnlock && (
         <div className="fixed bottom-6 right-6 z-[60]">
@@ -85,9 +85,12 @@ const App: React.FC = () => {
 
       {/* Subtle ambient gradients */}
       <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(196,167,231,0.08),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(86,148,159,0.05),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.035),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(255,255,255,0.02),transparent_55%)]" />
       </div>
+
+      {/* Film grain */}
+      <div className="grain-overlay" aria-hidden="true" />
 
       {/* Falling lines background */}
       <FallingLines reducedMotion={Boolean(prefersReducedMotion)} />
@@ -114,13 +117,11 @@ const App: React.FC = () => {
         />
 
         <Suspense fallback={<div className="min-h-[100dvh]" />}>
-        {/*
-          // <HeroSection
-          //   onScrollTo={scrollToSection}
-          //   reducedMotion={Boolean(prefersReducedMotion)}
-          //   sectionRef={heroSectionRef}
-          // />
-        */}
+          <HeroSection
+            onScrollTo={scrollToSection}
+            reducedMotion={Boolean(prefersReducedMotion)}
+            sectionRef={heroSectionRef}
+          />
           <main>
             <AboutSection
               reducedMotion={Boolean(prefersReducedMotion)}
@@ -140,6 +141,7 @@ const App: React.FC = () => {
 
       <Footer footerRef={footerRef} />
     </div>
+    </LazyMotion>
   );
 };
 

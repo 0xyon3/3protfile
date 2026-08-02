@@ -96,9 +96,10 @@ export const FallingLines = ({ reducedMotion }: FallingLinesProps) => {
       }
       lastTime = time;
 
-      // Fade trail
-      ctx.fillStyle = 'rgba(9, 9, 11, 0.14)';
-      ctx.fillRect(0, 0, width, height);
+      // Fade trails — only the two edge strips, not the whole screen
+      ctx.fillStyle = 'rgba(6, 6, 7, 0.14)';
+      ctx.fillRect(0, 0, EDGE_WIDTH, height);
+      ctx.fillRect(width - EDGE_WIDTH, 0, EDGE_WIDTH, height);
 
       ctx.font = `${FONT_SIZE}px "Noto Sans JP", "Hiragino Kaku Gothic Pro", monospace`;
       ctx.textBaseline = 'top';
@@ -118,18 +119,12 @@ export const FallingLines = ({ reducedMotion }: FallingLinesProps) => {
           const fade = t / trailLen;
 
           if (t === 0) {
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-            ctx.shadowColor = 'rgba(196, 167, 231, 0.5)';
-            ctx.shadowBlur = 8;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
           } else if (t === 1) {
-            ctx.fillStyle = 'rgba(196, 167, 231, 0.6)';
-            ctx.shadowColor = 'transparent';
-            ctx.shadowBlur = 0;
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
           } else {
             const alpha = (1 - fade) * 0.3;
-            ctx.fillStyle = `rgba(196, 167, 231, ${alpha})`;
-            ctx.shadowColor = 'transparent';
-            ctx.shadowBlur = 0;
+            ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
           }
 
           const glyphRow = row % glyphCache[i].length;
@@ -149,23 +144,69 @@ export const FallingLines = ({ reducedMotion }: FallingLinesProps) => {
         }
       }
 
-      ctx.shadowColor = 'transparent';
-      ctx.shadowBlur = 0;
-
       frameId = window.requestAnimationFrame(animate);
     };
 
+    let resizeRaf = 0;
+    const debouncedResize = () => {
+      if (resizeRaf) return;
+      resizeRaf = window.requestAnimationFrame(() => {
+        resizeRaf = 0;
+        resize();
+      });
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (frameId) {
+          window.cancelAnimationFrame(frameId);
+          frameId = 0;
+        }
+      } else if (!reducedMotion && !frameId) {
+        lastTime = 0;
+        frameId = window.requestAnimationFrame(animate);
+      }
+    };
+
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', debouncedResize);
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    // Pause the loop when the hero is scrolled out of view — the canvas is
+    // only visible near the top of the page.
+    let heroVisible = true;
+    let heroObserver: IntersectionObserver | null = null;
+    const heroEl = document.getElementById('hero');
+    if (heroEl && typeof IntersectionObserver !== 'undefined') {
+      heroObserver = new IntersectionObserver(
+        (entries) => {
+          heroVisible = entries[0]?.isIntersecting ?? true;
+          if (heroVisible && !document.hidden && !reducedMotion && !frameId) {
+            lastTime = 0;
+            frameId = window.requestAnimationFrame(animate);
+          } else if (!heroVisible && frameId) {
+            window.cancelAnimationFrame(frameId);
+            frameId = 0;
+          }
+        },
+        { rootMargin: '200px' },
+      );
+      heroObserver.observe(heroEl);
+    }
 
     if (!reducedMotion) {
-      ctx.fillStyle = 'rgba(9, 9, 11, 1)';
+      ctx.fillStyle = 'rgba(6, 6, 7, 1)';
       ctx.fillRect(0, 0, width, height);
-      frameId = window.requestAnimationFrame(animate);
+      if (heroVisible) {
+        frameId = window.requestAnimationFrame(animate);
+      }
     }
 
     return () => {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', debouncedResize);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      heroObserver?.disconnect();
+      if (resizeRaf) window.cancelAnimationFrame(resizeRaf);
       if (frameId) window.cancelAnimationFrame(frameId);
     };
   }, [reducedMotion]);
@@ -174,7 +215,7 @@ export const FallingLines = ({ reducedMotion }: FallingLinesProps) => {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-[1] h-[100dvh] w-screen opacity-45"
+      className="pointer-events-none fixed inset-0 z-[1] h-[100dvh] w-screen opacity-35"
     />
   );
 };
